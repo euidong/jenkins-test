@@ -4,10 +4,10 @@ pipeline {
     stage('build') {
       steps {
         echo 'start build'
+        sh 'cd externals/mine-collector'
         sh 'ls -al'
-        sh 'ls -al ./externals/mine-collector'
+        sh 'make build TAG=test'  
       }
     }
-
   }
 }
