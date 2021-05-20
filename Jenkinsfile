@@ -4,7 +4,7 @@ pipeline {
     stage('build') {
       steps {
         echo 'start build'
-        sh 'cat /etc/issue'
+        sh 'docker ps'
         sh 'apk add make'
         dir('externals/mine-collector') {
           sh 'make build TAG=test'
