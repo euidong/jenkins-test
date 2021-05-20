@@ -5,7 +5,7 @@ pipeline {
       steps {
         echo 'start build'
         sh 'ls -al'
-        sh 'ls externals/mine-collector'
+        sh 'ls -al ./externals/mine-collector'
       }
     }
 
