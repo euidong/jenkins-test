@@ -1,5 +1,10 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'docker:dind'
+       args '--rm --detach --privileged'
+    }
+  }
   stages {
     stage('build') {
       steps {
