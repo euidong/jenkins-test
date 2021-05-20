@@ -1,10 +1,7 @@
 pipeline {
-  agent none
+  agent any
   stages {
     stage('build') {
-			agent { 
-				dockerfile true
-			}
       steps {
         echo 'start build'
         dir('externals/mine-collector') {
