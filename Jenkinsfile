@@ -46,7 +46,7 @@ pipeline {
         failure {
           slackSend(
             color: "good",
-            message: "배포 성공\nCommit: [${env.GIT_COMMIT}]${env.GIT_URL}"
+            message: "배포 실패\nCommit: [${env.GIT_COMMIT}]${env.GIT_URL}"
           )
         }
       }
