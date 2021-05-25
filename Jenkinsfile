@@ -12,32 +12,13 @@ pipeline {
         success {
           slackSend(
             color: "good",
-            blocks: [
-              [
-                type: "section",
-                text: [
-                  type: "mrkdwn",
-                  text: "Commit - [${env.GIT_COMMIT}]${env.GIT_URL}"
-                ]
-              ],
-              [
-                type: "driver"
-              ]
-            ],
-            attachments: [
-              [
-                text: 'Commit',
-                fallback: '[${env.GIT_COMMIT}]${env.GIT_URL}',
-                color: '#ff0000'
-              ]
-            ],
-            message: "빌드 성공"
+            message: "빌드 성공\nCommit: [${env.GIT_COMMIT}]${env.GIT_URL}"
           )
         }
         failure {
           slackSend(
             color: "danger",
-            message: "빌드 실패"
+            message: "빌드 실패\nCommit: [${env.GIT_COMMIT}]${env.GIT_URL}"
           )
         }
       }
@@ -59,13 +40,13 @@ pipeline {
         success {
           slackSend(
             color: "good",
-            message: "배포 성공"
+            message: "배포 성공\nCommit: [${env.GIT_COMMIT}]${env.GIT_URL}"
           )
         }
         failure {
           slackSend(
             color: "good",
-            message: "배포 성공"
+            message: "배포 성공\nCommit: [${env.GIT_COMMIT}]${env.GIT_URL}"
           )
         }
       }
