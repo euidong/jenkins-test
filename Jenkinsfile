@@ -11,7 +11,7 @@ pipeline {
         script {
           commitMessage = sh(returnStdout: true, script: 'git log -1 --pretty=%B').trim()
           commitUrl = "${env.GIT_URL.substring(0, env.GIT_URL.indexOf('.git'))}/commit/${env.GIT_COMMIT}"
-          jobInfo = "[${env.BUILD_NUMBER}-${env.JOB_NAME}]]"
+          jobInfo = "[${env.BUILD_NUMBER}]"
         }
         dir(path: 'externals/mine-collector') {
           sh 'make build TAG=test'
@@ -21,13 +21,13 @@ pipeline {
         success {
           slackSend(
             color: "good",
-            message: "${jobInfo}빌드 성공\nCommit: ${commitMessage}\nurl: ${commitUrl}"
+            message: "${jobInfo}\n✅ 빌드 성공\nCommit: ${commitMessage}\n${commitUrl}"
           )
         }
         failure {
           slackSend(
             color: "danger",
-            message: "${jobInfo}빌드 실패\nCommit: ${commitMessage}\nurl: ${commitUrl}"
+            message: "${jobInfo}\n❌ 빌드 실패\nCommit: ${commitMessage}\n${commitUrl}"
           )
         }
       }
@@ -49,13 +49,13 @@ pipeline {
         success {
           slackSend(
             color: "good",
-            message: "${jobInfo}배포 성공\nCommit: ${commitMessage}\nurl: ${commitUrl}"
+            message: "${jobInfo}\n✅ 배포 성공\nCommit: ${commitMessage}\n${commitUrl}"
           )
         }
         failure {
           slackSend(
             color: "danger",
-            message: "${jobInfo}배포 실패\nCommit: ${commitMessage}\nurl: ${commitUrl}"
+            message: "${jobInfo}\n❌ 배포 실패\nCommit: ${commitMessage}\n${commitUrl}"
           )
         }
       }
