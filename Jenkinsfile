@@ -9,5 +9,16 @@ pipeline {
         }  
       }
     }
+    stage('deploy') {
+      steps([$class: 'BapSshPromotionPublisherPlugin']) {
+        sshPublisher(
+          continueOnError: false, failOnError: true,
+          publishers: [
+            sshPublisherDesc(
+              execCommand: "ls -al"
+            )
+          ]
+      }
+    }
   }
 }
