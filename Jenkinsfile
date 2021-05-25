@@ -7,7 +7,9 @@ pipeline {
     stage('build') {
       steps {
         echo 'start build'
-        message = sh(returnStdout: true, script: 'git log -1 --pretty=%B').trim()
+        script {
+          message = sh(returnStdout: true, script: 'git log -1 --pretty=%B').trim()
+        }
         dir(path: 'externals/mine-collector') {
           sh 'make build TAG=test'
         }
