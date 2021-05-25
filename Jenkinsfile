@@ -1,24 +1,29 @@
+def message = ""
+def commitUrl = "${env.GIT_URL}/commit/${env.GIT_COMMIT}"
+
 pipeline {
   agent any
   stages {
     stage('build') {
       steps {
         echo 'start build'
+        message = sh(returnStdout: true, script: 'git log -1 --pretty=%B').trim()
         dir(path: 'externals/mine-collector') {
           sh 'make build TAG=test'
         }
       }
       post {
+        message = getLastCommitMessage()
         success {
           slackSend(
             color: "good",
-            message: "빌드 성공\nCommit: [${env.GIT_COMMIT}]${env.GIT_URL}"
+            message: "빌드 성공\nCommit: ${message}\nurl: ${commitUrl}"
           )
         }
         failure {
           slackSend(
             color: "danger",
-            message: "빌드 실패\nCommit: [${env.GIT_COMMIT}]${env.GIT_URL}"
+            message: "빌드 실패\nCommit: ${message}\nurl: ${commitUrl}"
           )
         }
       }
@@ -40,13 +45,13 @@ pipeline {
         success {
           slackSend(
             color: "good",
-            message: "배포 성공\nCommit: [${env.GIT_COMMIT}]${env.GIT_URL}"
+            message: "배포 성공\nCommit: ${message}\nurl: ${commitUrl}"
           )
         }
         failure {
           slackSend(
-            color: "good",
-            message: "배포 실패\nCommit: [${env.GIT_COMMIT}]${env.GIT_URL}"
+            color: "danger",
+            message: "배포 실패\nCommit: ${message}\nurl: ${commitUrl}"
           )
         }
       }
