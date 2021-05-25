@@ -10,7 +10,7 @@ pipeline {
         echo 'start build'
         script {
           commitMessage = sh(returnStdout: true, script: 'git log -1 --pretty=%B').trim()
-          commitUrl = "${env.GIT_URL.split('.git')}/commit/${env.GIT_COMMIT}"
+          commitUrl = "${env.GIT_URL.substring(0, env.GIT_URL.indexOf('.git'))}/commit/${env.GIT_COMMIT}"
           jobInfo = "[${env.BUILD_NUMBER}-${env.JOB_NAME}]]"
         }
         dir(path: 'externals/mine-collector') {
