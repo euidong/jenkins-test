@@ -8,6 +8,14 @@ pipeline {
           sh 'make build TAG=test'
         }
       }
+      post {
+        success {
+          slackSend(channel: '정의동', color: '#00FF00', message: "빌드 성공 - [${env.BUILD_NUMBER}] ${env.JOB_NAME} (${env.BUILD_URL})")
+        }
+        failure {
+          slackSend(channel: '정의동', color: '#FF0000', message: "빌드 실패 - [${env.BUILD_NUMBER}] ${env.JOB_NAME} (${env.BUILD_URL})")
+        }
+      }
     }
 
     stage('deploy') {
@@ -21,6 +29,14 @@ pipeline {
               ]
             )
         ])
+      }
+      post {
+        success {
+          slackSend(channel: '정의동', color: '#00FF00', message: "배포 성공 - [${env.BUILD_NUMBER}] ${env.JOB_NAME} (${env.BUILD_URL})")
+        }
+        failure {
+          slackSend(channel: '정의동', color: '#FF0000', message: "배포 실패 - [${env.BUILD_NUMBER}] ${env.JOB_NAME} (${env.BUILD_URL})")
+        }
       }
     }
   }
