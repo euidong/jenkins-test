@@ -14,12 +14,21 @@ pipeline {
             color: "good",
             blocks: [
               [
-                title: "Build",
+                type: "section",
+                text: [
+                  type: "mrkdwn",
+                  text: "Commit - [${env.GIT_COMMIT}]${env.GIT_URL}"
+                ]
               ],
               [
-                title: "Commit",
-                value: "[${env.GIT_COMMIT}]${env.GIT_URL}",
-                short: true
+                type: "driver"
+              ]
+            ],
+            attachments: [
+              [
+                text: 'Commit',
+                fallback: '[${env.GIT_COMMIT}]${env.GIT_URL}',
+                color: '#ff0000'
               ]
             ],
             message: "빌드 성공"
@@ -28,13 +37,6 @@ pipeline {
         failure {
           slackSend(
             color: "danger",
-            blocks: [
-              [
-                title: "Branch",
-                value: "${env.GIT_BRANCH}",
-                short: true
-              ]
-            ],
             message: "빌드 실패"
           )
         }
@@ -57,32 +59,12 @@ pipeline {
         success {
           slackSend(
             color: "good",
-            blocks: [
-              [
-                title: "Build",
-              ],
-              [
-                title: "Commit",
-                value: "[${env.GIT_COMMIT}]${env.GIT_URL}",
-                short: true
-              ]
-            ],
             message: "배포 성공"
           )
         }
         failure {
           slackSend(
             color: "good",
-            blocks: [
-              [
-                title: "Build",
-              ],
-              [
-                title: "Commit",
-                value: "[${env.GIT_COMMIT}]${env.GIT_URL}",
-                short: true
-              ]
-            ],
             message: "배포 성공"
           )
         }
