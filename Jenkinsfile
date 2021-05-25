@@ -13,7 +13,6 @@ pipeline {
         }
       }
       post {
-        message = getLastCommitMessage()
         success {
           slackSend(
             color: "good",
