@@ -16,7 +16,7 @@ pipeline {
             sshPublisherDesc(
               configName: "test-deploy",
               verbose: true,
-              transpers: [
+              transfers: [
                 sshTransfer(execCommand: "ls -al")
               ]
             )
