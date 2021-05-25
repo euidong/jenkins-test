@@ -10,10 +10,33 @@ pipeline {
       }
       post {
         success {
-          slackSend(color: '#00FF00', timestamp: 'YYYY-MM-DD hh:mm:ss', message: "빌드 성공 - [${env.BUILD_NUMBER}] ${env.JOB_NAME} (${env.BUILD_URL})")
+          slackSend(
+            color: "good",
+            blocks: [
+              [
+                title: "Build",
+              ],
+              [
+                title: "Commit",
+                value: "[${env.GIT_COMMIT}]${env.GIT_URL}",
+                short: true
+              ]
+            ],
+            message: "빌드 성공"
+          )
         }
         failure {
-          slackSend(color: '#FF0000', timestamp: 'YYYY-MM-DD hh:mm:ss', message: "빌드 실패 - [${env.BUILD_NUMBER}] ${env.JOB_NAME} (${env.BUILD_URL})")
+          slackSend(
+            color: "danger",
+            blocks: [
+              [
+                title: "Branch",
+                value: "${env.GIT_BRANCH}",
+                short: true
+              ]
+            ],
+            message: "빌드 실패"
+          )
         }
       }
     }
@@ -32,10 +55,36 @@ pipeline {
       }
       post {
         success {
-          slackSend(color: '#00FF00', timestamp: 'YYYY-MM-DD hh:mm:ss', message: "배포 성공 - [${env.BUILD_NUMBER}] ${env.JOB_NAME} (${env.BUILD_URL})")
+          slackSend(
+            color: "good",
+            blocks: [
+              [
+                title: "Build",
+              ],
+              [
+                title: "Commit",
+                value: "[${env.GIT_COMMIT}]${env.GIT_URL}",
+                short: true
+              ]
+            ],
+            message: "배포 성공"
+          )
         }
         failure {
-          slackSend(color: '#FF0000', timestamp: 'YYYY-MM-DD hh:mm:ss', message: "배포 실패 - [${env.BUILD_NUMBER}] ${env.JOB_NAME} (${env.BUILD_URL})")
+          slackSend(
+            color: "good",
+            blocks: [
+              [
+                title: "Build",
+              ],
+              [
+                title: "Commit",
+                value: "[${env.GIT_COMMIT}]${env.GIT_URL}",
+                short: true
+              ]
+            ],
+            message: "배포 성공"
+          )
         }
       }
     }
