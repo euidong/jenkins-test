@@ -14,7 +14,6 @@ pipeline {
       steps {
         sshPublisher(failOnError: true, publishers: [
             sshPublisherDesc(
-              configName: "test-deploy",
               verbose: true,
               transfers: [
                 sshTransfer(execCommand: "ls -al")
