@@ -1,5 +1,6 @@
-def message = ""
+def commitMessage = ""
 def commitUrl = ""
+def jobInfo = ""
 
 pipeline {
   agent any
@@ -10,6 +11,7 @@ pipeline {
         script {
           commitMessage = sh(returnStdout: true, script: 'git log -1 --pretty=%B').trim()
           commitUrl = "${env.GIT_URL}/commit/${env.GIT_COMMIT}"
+          jobInfo = "[${env.BUILD_NUMBER}-${env.JOB_NAME}]]"
         }
         dir(path: 'externals/mine-collector') {
           sh 'make build TAG=test'
@@ -19,13 +21,13 @@ pipeline {
         success {
           slackSend(
             color: "good",
-            message: "빌드 성공\nCommit: ${message}\nurl: ${commitUrl}"
+            message: "${jobInfo}빌드 성공\nCommit: ${commitMessage}\nurl: ${commitUrl}"
           )
         }
         failure {
           slackSend(
             color: "danger",
-            message: "빌드 실패\nCommit: ${message}\nurl: ${commitUrl}"
+            message: "${jobInfo}빌드 실패\nCommit: ${commitMessage}\nurl: ${commitUrl}"
           )
         }
       }
@@ -47,13 +49,13 @@ pipeline {
         success {
           slackSend(
             color: "good",
-            message: "배포 성공\nCommit: ${message}\nurl: ${commitUrl}"
+            message: "${jobInfo}배포 성공\nCommit: ${commitMessage}\nurl: ${commitUrl}"
           )
         }
         failure {
           slackSend(
             color: "danger",
-            message: "배포 실패\nCommit: ${message}\nurl: ${commitUrl}"
+            message: "${jobInfo}배포 실패\nCommit: ${commitMessage}\nurl: ${commitUrl}"
           )
         }
       }
