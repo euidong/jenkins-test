@@ -7,19 +7,21 @@ pipeline {
         dir(path: 'externals/mine-collector') {
           sh 'make build TAG=test'
         }
-
       }
     }
 
     stage('deploy') {
       steps {
         sshPublisher(failOnError: true, publishers: [
-                      sshPublisherDesc(
-                          execCommand: "ls -al"
-                        )
-                      ], masterNodeName: 'test')
-          }
-        }
-
+            sshPublisherDesc(
+              configName: "test-deploy",
+              verbose: true,
+              transpers: [
+                sshTransfer(execCommand: "ls -al")
+              ]
+            )
+        ], masterNodeName: 'test')
       }
     }
+  }
+}
