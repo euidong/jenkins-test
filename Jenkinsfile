@@ -1,5 +1,5 @@
 def message = ""
-def commitUrl = "${env.GIT_URL}/commit/${env.GIT_COMMIT}"
+def commitUrl = ""
 
 pipeline {
   agent any
@@ -8,7 +8,8 @@ pipeline {
       steps {
         echo 'start build'
         script {
-          message = sh(returnStdout: true, script: 'git log -1 --pretty=%B').trim()
+          commitMessage = sh(returnStdout: true, script: 'git log -1 --pretty=%B').trim()
+          commitUrl = "${env.GIT_URL}/commit/${env.GIT_COMMIT}"
         }
         dir(path: 'externals/mine-collector') {
           sh 'make build TAG=test'
