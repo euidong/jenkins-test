@@ -10,10 +10,10 @@ pipeline {
       }
       post {
         success {
-          slackSend(color: '#00FF00', message: "빌드 성공 - [${env.BUILD_NUMBER}] ${env.JOB_NAME} (${env.BUILD_URL})")
+          slackSend(color: '#00FF00', timestamp: 'YYYY-MM-DD hh:mm:ss', message: "빌드 성공 - [${env.BUILD_NUMBER}] ${env.JOB_NAME} (${env.BUILD_URL})")
         }
         failure {
-          slackSend(color: '#FF0000', message: "빌드 실패 - [${env.BUILD_NUMBER}] ${env.JOB_NAME} (${env.BUILD_URL})")
+          slackSend(color: '#FF0000', timestamp: 'YYYY-MM-DD hh:mm:ss', message: "빌드 실패 - [${env.BUILD_NUMBER}] ${env.JOB_NAME} (${env.BUILD_URL})")
         }
       }
     }
@@ -32,10 +32,10 @@ pipeline {
       }
       post {
         success {
-          slackSend(color: '#00FF00', message: "배포 성공 - [${env.BUILD_NUMBER}] ${env.JOB_NAME} (${env.BUILD_URL})")
+          slackSend(color: '#00FF00', timestamp: 'YYYY-MM-DD hh:mm:ss', message: "배포 성공 - [${env.BUILD_NUMBER}] ${env.JOB_NAME} (${env.BUILD_URL})")
         }
         failure {
-          slackSend(color: '#FF0000', message: "배포 실패 - [${env.BUILD_NUMBER}] ${env.JOB_NAME} (${env.BUILD_URL})")
+          slackSend(color: '#FF0000', timestamp: 'YYYY-MM-DD hh:mm:ss', message: "배포 실패 - [${env.BUILD_NUMBER}] ${env.JOB_NAME} (${env.BUILD_URL})")
         }
       }
     }
