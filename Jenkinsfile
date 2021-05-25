@@ -18,6 +18,7 @@ pipeline {
               execCommand: "ls -al"
             )
           ]
+        )
       }
     }
   }
