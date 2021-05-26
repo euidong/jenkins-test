@@ -9,21 +9,14 @@ def publishers = []
 def getRemotePublisher(command) {
   def remoteHostsString = "${env.REMOTE_HOSTS}"
   def remoteHosts = ['test1', 'test2']
-  remoteHosts.each { remoteHost -> 
-    publishers.add(sshPublisherDesc(
-      configName: "${remoteHost}",
-      verbose: true,
-      transfers: [
-        sshTransfer(execCommand: "${command}")
-      ]
-    ));
-  }
+  remoteHosts.add('test3');
+  echo '${remoteHosts}'
 }
 
 @NonCPS
 def runCommandToRemoteHosts(command) {
   getRemotePublisher(command)
-  sshPublisher(failOnError: true, publishers: publishers)
+  // sshPublisher(failOnError: true, publishers: publishers)
 }
 
 pipeline {
