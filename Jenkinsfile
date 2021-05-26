@@ -35,7 +35,8 @@ pipeline {
 
     stage('deploy') {
       steps {
-        sshPublisher(failOnError: true, publishers: [
+        script {
+          sshPublisher(failOnError: true, publishers: [
             sshPublisherDesc(
               configName: 'test',
               verbose: true,
@@ -43,7 +44,8 @@ pipeline {
                 sshTransfer(execCommand: "ls -al")
               ]
             )
-        ])
+          ])
+        }
       }
       post {
         success {
