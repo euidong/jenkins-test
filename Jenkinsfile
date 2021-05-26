@@ -3,7 +3,7 @@ import groovy.json.JsonSlurper
 def commitMessage = ""
 def commitUrl = ""
 def jobInfo = ""
-def publisher = []
+def publishers = []
 
 @NonCPS
 def getRemotePublisher(command) {
