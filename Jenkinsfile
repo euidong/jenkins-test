@@ -10,7 +10,7 @@ def getRemotePublisher(command) {
   def remoteHostsString = "${env.REMOTE_HOSTS}"
   def remoteHosts = ['test1', 'test2']
   remoteHosts.each { remoteHost -> 
-    publisher.add(sshPublisherDesc(
+    publishers.add(sshPublisherDesc(
       configName: "${remoteHost}",
       verbose: true,
       transfers: [
