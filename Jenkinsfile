@@ -9,7 +9,7 @@ def publishers = []
 def getRemotePublisher(command) {
   // def remoteHostsString = "${env.REMOTE_HOSTS}"
   // def remoteHosts = new JsonSlurper().parseText(remoteHostsString)
-  publishers.add(sshPublisherDesc(
+  publishers << sshPublisherDesc(
     configName: "test1",
     verbose: true,
     transfers: [
