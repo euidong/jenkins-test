@@ -16,7 +16,7 @@ def runCommandToRemoteHosts(command) {
   publishers = []
   remoteHosts.each {
     echo "${it}" 
-    publishers << sshPublisherDesc(configName: "${it}", verbose: true, transfers: [ sshTransfer(execCommand: "${command}") ])
+    // publishers << sshPublisherDesc(configName: "${it}", verbose: true, transfers: [ sshTransfer(execCommand: "${command}") ])
   }
   sshPublisher(failOnError: true, publishers: publishers)
 }
