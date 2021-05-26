@@ -13,10 +13,9 @@ def getRemotePublisher(command) {
 @NonCPS
 def runCommandToRemoteHosts(command) {
   getRemotePublisher(command)
-  publishers = [sshPublisherDesc(configName: "test1", verbose: true, transfers: [ sshTransfer(execCommand: "${command}") ])]
-  remoteHosts.each { remoteHost ->
-    publishers << sshPublisherDesc(configName: "${remoteHost}", verbose: true, transfers: [ sshTransfer(execCommand: "${command}") ])
-  }
+  publishers = []
+  publishers << sshPublisherDesc(configName: 'test1', verbose: true, transfers: [ sshTransfer(execCommand: "${command}") ])
+  publishers << sshPublisherDesc(configName: 'test2', verbose: true, transfers: [ sshTransfer(execCommand: "${command}") ])
   sshPublisher(failOnError: true, publishers: publishers)
 }
 
