@@ -19,11 +19,6 @@ def getRemotePublisher(command) {
 }
 
 @NonCPS
-def nodeNames() {
-  return jenkins.model.Jenkins.instance.nodes.collect { node -> node.name }
-}
-
-@NonCPS
 def runCommandToRemoteHosts(command) {
   def publishers = getRemotePublisher()
   sshPublisher(failOnError: true, publishers: publishers)
