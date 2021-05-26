@@ -9,34 +9,13 @@ def publishers = []
 def getRemotePublisher(command) {
   def remoteHostsString = "${env.REMOTE_HOSTS}"
   def remoteHosts = new JsonSlurper().parseText(remoteHostsString)
-//   publishers << sshPublisherDesc(
-//     configName: "test1",
-//     verbose: true,
-//     transfers: [
-//       sshTransfer(execCommand: "${command}")
-//     ]
-//   )
+  publishers << sshPublisherDesc(configName: 'test1', verbose: true, transfers: [ sshTransfer(execCommand: "${command}") ])
 }
 
 @NonCPS
 def runCommandToRemoteHosts(command) {
   getRemotePublisher(command)
-  sshPublisher(failOnError: true, publishers: [
-    sshPublisherDesc(
-      configName: 'test1',
-      verbose: true,
-      transfers: [
-        sshTransfer(execCommand: "${command}")
-      ]
-    ),
-    sshPublisherDesc(
-      configName: 'test2',
-      verbose: true,
-      transfers: [
-        sshTransfer(execCommand: "${command}")
-      ]
-    )
-  ])
+  sshPublisher(failOnError: true, publishers: publishers)
 }
 
 pipeline {
