@@ -1,10 +1,14 @@
+import groovy.json.JsonSlurper
+
 def commitMessage = ""
 def commitUrl = ""
 def jobInfo = ""
 
 @NonCPS
 def runCommandToRemoteHosts(command) {
-  remoteHosts = $env.REMOTE_HOSTS.split(', ')
+  def remoteHostsString = ${env.REMOTE_HOSTS}
+  def remoteHosts = new JsonSlurper().parseText(remoteHostsString)
+  
   remoteHosts.each { remoteHost ->
     sshPublisher(failOnError: true, publishers: [
       sshPublisherDesc(
