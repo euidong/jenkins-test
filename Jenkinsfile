@@ -16,14 +16,6 @@ def runCommandToRemoteHosts(command) {
         sshTransfer(execCommand: "${command}")
       ]
     )
-  ], [
-    sshPublisherDesc(
-      configName: "${remoteHosts[1]}",
-      verbose: true,
-      transfers: [
-        sshTransfer(execCommand: "${command}")
-      ]
-    )
   ])
 }
 
