@@ -8,7 +8,7 @@ def jobInfo = ""
 def runCommandToRemoteHosts(command) {
   def remoteHostsString = ${env.REMOTE_HOSTS}
   def remoteHosts = new JsonSlurper().parseText(remoteHostsString)
-  sh(script: 'echo remoteHosts')
+  echo '${remoteHosts}'
   
   remoteHosts.each { remoteHost ->
     sshPublisher(failOnError: true, publishers: [
