@@ -10,7 +10,6 @@ def runCommandToRemoteHosts(command) {
   def remoteHosts = new JsonSlurper().parseText(remoteHostsString)
   publishers = []
   remoteHosts.each {
-    echo "${it}" 
     publishers << sshPublisherDesc(configName: "${it}", verbose: true, transfers: [ sshTransfer(execCommand: "${command}") ])
   }
   sshPublisher(failOnError: true, publishers: publishers)
