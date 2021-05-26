@@ -57,7 +57,7 @@ pipeline {
 
     stage('deploy') {
       steps {
-        echo "${remoteHosts}"
+        echo "${remoteHosts[0]}"
         script {
           runCommandToRemoteHosts("ls -al", env.REMOTE_HOSTS)
         }
