@@ -3,13 +3,12 @@ import groovy.json.JsonSlurper
 def commitMessage = ""
 def commitUrl = ""
 def jobInfo = ""
-def publishers = []
+def publishers = [sshPublisherDesc(configName: 'test1', verbose: true, transfers: [ sshTransfer(execCommand: "${command}") ])]
 
 @NonCPS
 def getRemotePublisher(command) {
   def remoteHostsString = "${env.REMOTE_HOSTS}"
   def remoteHosts = new JsonSlurper().parseText(remoteHostsString)
-  publishers.add(sshPublisherDesc(configName: 'test1', verbose: true, transfers: [ sshTransfer(execCommand: "${command}") ]))
 }
 
 @NonCPS
