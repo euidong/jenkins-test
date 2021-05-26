@@ -16,7 +16,7 @@ def getRemotePublisher(command) {
       transfers: [
         sshTransfer(execCommand: "${command}")
       ]
-    ))
+    ));
   }
 }
 
