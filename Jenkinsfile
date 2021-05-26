@@ -2,7 +2,7 @@ def commitMessage = ""
 def commitUrl = ""
 def jobInfo = ""
 
-
+remoteHosts = ["test"]
 
 @NonCPS
 def runCommandToRemoteHosts(command, remoteHosts) {
@@ -54,7 +54,7 @@ pipeline {
       steps {
         echo "${env.REMOTE_HOSTS}"
         script {
-          runCommandToRemoteHosts("ls -al", ${env.REMOTE_HOSTS})
+          runCommandToRemoteHosts("ls -al", remoteHosts)
         }
       }
       post {
