@@ -23,7 +23,7 @@ def runCommandToRemoteHosts(command) {
   getRemotePublisher(command)
   sshPublisher(failOnError: true, publishers: [
     {
-      configName: "test1",
+      configName: test1,
       verbose: true,
       transfers: [
         sshTransfer(execCommand: "${command}")
