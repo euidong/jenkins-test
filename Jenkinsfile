@@ -4,7 +4,7 @@ def jobInfo = ""
 
 @NonCPS
 def runCommandToRemoteHosts(command) {
-  remoteHosts = env.REMOTE_HOSTS.split(', ')
+  remoteHosts = ${env.REMOTE_HOSTS}.split(', ')
   remoteHosts.each { remoteHost ->
     sshPublisher(failOnError: true, publishers: [
       sshPublisherDesc(
