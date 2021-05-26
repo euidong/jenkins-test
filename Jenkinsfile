@@ -5,25 +5,29 @@ def commitUrl = ""
 def jobInfo = ""
 
 @NonCPS
-def runCommandToRemoteHosts(command) {
+def getRemotePublisher(command) {
   def remoteHostsString = "${env.REMOTE_HOSTS}"
   def remoteHosts = ['test1', 'test2']
-  sshPublisher(failOnError: true, publishers: [
+  return remoteHosts.collect { remoteHost ->
     sshPublisherDesc(
-      configName: "${remoteHosts[0]}",
-      verbose: true,
-      transfers: [
-        sshTransfer(execCommand: "${command}")
-      ]
-    ),
-    sshPublisherDesc(
-      configName: "${remoteHosts[1]}",
+      configName: "${remoteHost}",
       verbose: true,
       transfers: [
         sshTransfer(execCommand: "${command}")
       ]
     )
-  ])
+  }
+}
+
+@NonCPS
+def nodeNames() {
+  return jenkins.model.Jenkins.instance.nodes.collect { node -> node.name }
+}
+
+@NonCPS
+def runCommandToRemoteHosts(command) {
+  publishers = getRemotePublisher()
+  sshPublisher(failOnError: true, publishers: publishers)
 }
 
 pipeline {
