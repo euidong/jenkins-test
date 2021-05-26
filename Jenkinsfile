@@ -55,8 +55,8 @@ pipeline {
     }
 
     stage('deploy') {
-      script {
-        steps {
+      steps {
+        script {
           runCommandToRemoteHosts("ls -al")
         }
       }
