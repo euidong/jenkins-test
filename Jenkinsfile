@@ -9,15 +9,17 @@ def runCommandToRemoteHosts(command) {
   def remoteHostsString = "${env.REMOTE_HOSTS}"
   def remoteHosts = new JsonSlurper().parseText(remoteHostsString)
   remoteHosts.each { remoteHost ->
-    sshPublisher(failOnError: true, publishers: [
-      sshPublisherDesc(
-        configName: "${remoteHost}",
-        verbose: true,
-        transfers: [
-          sshTransfer(execCommand: "${command}")
-        ]
-      )
-    ])
+    step {
+      sshPublisher(failOnError: true, publishers: [
+        sshPublisherDesc(
+          configName: "${remoteHost}",
+          verbose: true,
+          transfers: [
+            sshTransfer(execCommand: "${command}")
+          ]
+        )
+      ])
+    }
   }
 }
 
@@ -54,10 +56,8 @@ pipeline {
     }
 
     stage('deploy') {
-      steps {
-        script {
-          runCommandToRemoteHosts("ls -al")
-        }
+      script {
+        runCommandToRemoteHosts("ls -al")
       }
       post {
         success {
