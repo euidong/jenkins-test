@@ -3,7 +3,8 @@ def commitUrl = ""
 def jobInfo = ""
 
 @NonCPS
-def runCommandToRemoteHosts(command, remoteHosts) {
+def runCommandToRemoteHosts(command) {
+  remoteHosts = env.REMOTE_HOSTS.split(', ')
   remoteHosts.each { remoteHost ->
     sshPublisher(failOnError: true, publishers: [
       sshPublisherDesc(
@@ -50,7 +51,7 @@ pipeline {
 
     stage('deploy') {
       steps {
-        echo "${env.REMOTE_HOSTS}"
+        echo "${env.REMOTE_HOSTS.split(', ')}"
         script {
           runCommandToRemoteHosts("ls -al", env.REMOTE_HOSTS)
         }
