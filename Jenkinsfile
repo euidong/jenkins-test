@@ -3,12 +3,11 @@ import groovy.json.JsonSlurper
 def commitMessage = ""
 def commitUrl = ""
 def jobInfo = ""
+def remoteHostsString = ""
+def remoteHosts = [:]
 
 @NonCPS
 def runCommandToRemoteHosts(command) {
-  def remoteHostsString = ${env.REMOTE_HOSTS}
-  def remoteHosts = new JsonSlurper().parseText(remoteHostsString)
-  echo '${remoteHosts}'
   
   remoteHosts.each { remoteHost ->
     sshPublisher(failOnError: true, publishers: [
@@ -33,6 +32,8 @@ pipeline {
           commitMessage = sh(returnStdout: true, script: 'git log -1 --pretty=%B').trim()
           commitUrl = "${env.GIT_URL.substring(0, env.GIT_URL.indexOf('.git'))}/commit/${env.GIT_COMMIT}"
           jobInfo = "[${env.BUILD_NUMBER}]"
+          remoteHostsString = "${env.REMOTE_HOSTS}"
+          remoteHosts = new JsonSlurper().parseText(remoteHostsString)
         }
         dir(path: 'externals/mine-collector') {
           sh 'make build TAG=test'
@@ -56,7 +57,7 @@ pipeline {
 
     stage('deploy') {
       steps {
-        echo "${env.REMOTE_HOSTS}"
+        echo "${remoteHosts}"
         script {
           runCommandToRemoteHosts("ls -al", env.REMOTE_HOSTS)
         }
