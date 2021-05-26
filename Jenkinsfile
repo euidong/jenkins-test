@@ -22,7 +22,7 @@ def getRemotePublisher(command) {
 def runCommandToRemoteHosts(command) {
   getRemotePublisher(command)
   sshPublisher(failOnError: true, publishers: remoteHosts.collect { remoteHost ->
-    sshPublisherDesc(
+    new sshPublisherDesc(
       configName: "${remoteHost}",
       verbose: true,
       transfers: [
