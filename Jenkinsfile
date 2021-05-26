@@ -59,7 +59,7 @@ pipeline {
       steps {
         echo "${remoteHosts[0]}"
         script {
-          runCommandToRemoteHosts("ls -al", env.REMOTE_HOSTS)
+          runCommandToRemoteHosts("ls -al")
         }
       }
       post {
