@@ -53,7 +53,7 @@ pipeline {
     stage('deploy') {
       steps {
         script {
-          runCommandToRemoteHosts("ls -al", env.REMOTE_HOSTS)
+          runCommandToRemoteHosts("ls -al", ${REMOTE_HOSTS})
         }
       }
       post {
