@@ -14,6 +14,7 @@ def getRemotePublisher(command) {
 def runCommandToRemoteHosts(command) {
   getRemotePublisher(command)
   publishers = [sshPublisherDesc(configName: 'test1', verbose: true, transfers: [ sshTransfer(execCommand: "${command}") ])]
+  publishers << sshPublisherDesc(configName: 'test2', verbose: true, transfers: [ sshTransfer(execCommand: "${command}") ])
   sshPublisher(failOnError: true, publishers: publishers)
 }
 
