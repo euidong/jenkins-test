@@ -8,6 +8,7 @@ def jobInfo = ""
 def runCommandToRemoteHosts(command) {
   def remoteHostsString = ${env.REMOTE_HOSTS}
   def remoteHosts = new JsonSlurper().parseText(remoteHostsString)
+  sh(script: 'echo remoteHosts')
   
   remoteHosts.each { remoteHost ->
     sshPublisher(failOnError: true, publishers: [
@@ -55,7 +56,7 @@ pipeline {
 
     stage('deploy') {
       steps {
-        echo "${env.REMOTE_HOSTS.split(', ')}"
+        echo "${env.REMOTE_HOSTS}"
         script {
           runCommandToRemoteHosts("ls -al", env.REMOTE_HOSTS)
         }
