@@ -8,8 +8,7 @@ def jobInfo = ""
 def getRemotePublisher(command) {
   def remoteHostsString = "${env.REMOTE_HOSTS}"
   def remoteHosts = ['test1', 'test2']
-  return remoteHosts.collect { remoteHost ->
-    sshPublisherDesc(
+  return remoteHosts.collect { remoteHost -> sshPublisherDesc(
       configName: "${remoteHost}",
       verbose: true,
       transfers: [
@@ -26,7 +25,7 @@ def nodeNames() {
 
 @NonCPS
 def runCommandToRemoteHosts(command) {
-  publishers = getRemotePublisher()
+  def publishers = getRemotePublisher()
   sshPublisher(failOnError: true, publishers: publishers)
 }
 
