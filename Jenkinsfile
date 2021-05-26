@@ -10,7 +10,7 @@ def runCommandToRemoteHosts(command) {
   def remoteHosts = ['test1', 'test2']
   sshPublisher(failOnError: true, publishers: [
     sshPublisherDesc(
-      configName: "${remoteHosts[0]}",
+      configName: "${remoteHosts[1]}",
       verbose: true,
       transfers: [
         sshTransfer(execCommand: "${command}")
