@@ -7,19 +7,18 @@ def jobInfo = ""
 @NonCPS
 def runCommandToRemoteHosts(command) {
   def remoteHostsString = "${env.REMOTE_HOSTS}"
-  def remoteHosts = new JsonSlurper().parseText(remoteHostsString)
+  def remoteHosts = ['test1', 'test2']
+  
   remoteHosts.each { remoteHost ->
-    step {
-      sshPublisher(failOnError: true, publishers: [
-        sshPublisherDesc(
-          configName: "${remoteHost}",
-          verbose: true,
-          transfers: [
-            sshTransfer(execCommand: "${command}")
-          ]
-        )
-      ])
-    }
+    sshPublisher(failOnError: true, publishers: [
+      sshPublisherDesc(
+        configName: "${remoteHost}",
+        verbose: true,
+        transfers: [
+          sshTransfer(execCommand: "${command}")
+        ]
+      )
+    ])
   }
 }
 
@@ -57,7 +56,9 @@ pipeline {
 
     stage('deploy') {
       script {
-        runCommandToRemoteHosts("ls -al")
+        steps {
+          runCommandToRemoteHosts("ls -al")
+        }
       }
       post {
         success {
