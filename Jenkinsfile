@@ -8,11 +8,10 @@ def jobInfo = ""
 def runCommandToRemoteHosts(command) {
   def remoteHostsString = "${env.REMOTE_HOSTS}"
   def remoteHosts = ['test1', 'test2']
-  
-  remoteHosts.each { remoteHost ->
+  for (int i = 0; i < remoteHosts.length; i++) {
     sshPublisher(failOnError: true, publishers: [
       sshPublisherDesc(
-        configName: "${remoteHost}",
+        configName: "${remoteHosts[i]}",
         verbose: true,
         transfers: [
           sshTransfer(execCommand: "${command}")
