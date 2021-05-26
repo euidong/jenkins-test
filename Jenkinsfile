@@ -8,17 +8,23 @@ def jobInfo = ""
 def runCommandToRemoteHosts(command) {
   def remoteHostsString = "${env.REMOTE_HOSTS}"
   def remoteHosts = ['test1', 'test2']
-  for (int i = 0; i < remoteHosts.length; i++) {
-    sshPublisher(failOnError: true, publishers: [
-      sshPublisherDesc(
-        configName: "${remoteHosts[i]}",
-        verbose: true,
-        transfers: [
-          sshTransfer(execCommand: "${command}")
-        ]
-      )
-    ])
-  }
+  sshPublisher(failOnError: true, publishers: [
+    sshPublisherDesc(
+      configName: "${remoteHosts[0]}",
+      verbose: true,
+      transfers: [
+        sshTransfer(execCommand: "${command}")
+      ]
+    )
+  ], [
+    sshPublisherDesc(
+      configName: "${remoteHosts[1]}",
+      verbose: true,
+      transfers: [
+        sshTransfer(execCommand: "${command}")
+      ]
+    )
+  ])
 }
 
 pipeline {
