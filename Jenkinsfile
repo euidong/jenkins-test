@@ -2,6 +2,23 @@ def commitMessage = ""
 def commitUrl = ""
 def jobInfo = ""
 
+
+
+@NonCPS
+def runCommandToRemoteHosts(command, remoteHosts) {
+  remoteHosts.each { remoteHost ->
+    sshPublisher(failOnError: true, publishers: [
+      sshPublisherDesc(
+        configName: "${remoteHost}",
+        verbose: true,
+        transfers: [
+          sshTransfer(execCommand: "${command}")
+        ]
+      )
+    ])
+  }
+}
+
 pipeline {
   agent any
   stages {
@@ -36,15 +53,7 @@ pipeline {
     stage('deploy') {
       steps {
         script {
-          sshPublisher(failOnError: true, publishers: [
-            sshPublisherDesc(
-              configName: 'test',
-              verbose: true,
-              transfers: [
-                sshTransfer(execCommand: "ls -al")
-              ]
-            )
-          ])
+          runCommandToRemoteHosts("ls -al", env.REMOTE_HOSTS)
         }
       }
       post {
