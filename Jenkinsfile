@@ -7,16 +7,21 @@ def publishers = []
 
 @NonCPS
 def getRemotePublisher(command) {
-  def remoteHostsString = "${env.REMOTE_HOSTS}"
-  def remoteHosts = ['test1', 'test2']
-  remoteHosts.add('test3');
-  echo '${remoteHosts}'
+  // def remoteHostsString = "${env.REMOTE_HOSTS}"
+  // def remoteHosts = new JsonSlurper().parseText(remoteHostsString)
+  publishers.add(sshPublisherDesc(
+    configName: "test1",
+    verbose: true,
+    transfers: [
+      sshTransfer(execCommand: "${command}")
+    ]
+  ))
 }
 
 @NonCPS
 def runCommandToRemoteHosts(command) {
   getRemotePublisher(command)
-  // sshPublisher(failOnError: true, publishers: publishers)
+  sshPublisher(failOnError: true, publishers: publishers)
 }
 
 pipeline {
