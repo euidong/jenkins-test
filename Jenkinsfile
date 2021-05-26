@@ -21,15 +21,15 @@ def getRemotePublisher(command) {
 @NonCPS
 def runCommandToRemoteHosts(command) {
   getRemotePublisher(command)
-  sshPublisher(failOnError: true, publishers: remoteHosts.collect { remoteHost ->
-    new sshPublisherDesc(
-      configName: "${remoteHost}",
+  sshPublisher(failOnError: true, publishers: [
+    {
+      configName: "test1",
       verbose: true,
       transfers: [
         sshTransfer(execCommand: "${command}")
       ]
-    )
-  })
+    }
+  ])
 }
 
 pipeline {
